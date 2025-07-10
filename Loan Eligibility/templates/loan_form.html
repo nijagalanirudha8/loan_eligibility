@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Loan Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .error {
+            color: red;
+            font-size: 0.875rem;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4>Loan Eligibility Form</h4>
+            </div>
+            <div class="card-body">
+                <form id="loanForm" method="POST" autocomplete="off" novalidate>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Name</label>
+                            <input type="text" name="name" class="form-control" required>
+                            <div class="error" id="nameError"></div>
+                        </div>
+                        <div class="col">
+                            <label>Age</label>
+                            <input type="number" name="age" class="form-control" required>
+                            <div class="error" id="ageError"></div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Graduated?</label>
+                            <select name="grad" class="form-select" required>
+                                <option value="">Select</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                            <div class="error" id="gradError"></div>
+                        </div>
+                        <div class="col">
+                            <label>Employed?</label>
+                            <select name="job" class="form-select" required>
+                                <option value="">Select</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                            <div class="error" id="jobError"></div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Salary</label>
+                            <input type="number" name="salary" class="form-control" required>
+                            <div class="error" id="salaryError"></div>
+                        </div>
+                        <div class="col">
+                            <label>Dependents</label>
+                            <input type="number" name="dep" class="form-control" required>
+                            <div class="error" id="depError"></div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>CIBIL Score</label>
+                            <input type="number" name="cb" class="form-control" required>
+                            <div class="error" id="cbError"></div>
+                        </div>
+                        <div class="col">
+                            <label>Requested Loan Amount</label>
+                            <input type="number" name="loan1" class="form-control" required>
+                            <div class="error" id="loan1Error"></div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Check Eligibility</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('loanForm');
+        const fields = ['name', 'age', 'grad', 'job', 'salary', 'dep', 'cb', 'loan1'];
+
+        form.addEventListener('submit', function (e) {
+            let valid = true;
+
+            fields.forEach(field => {
+                const input = form[field];
+                const errorDiv = document.getElementById(field + 'Error');
+                if (!input.value.trim()) {
+                    errorDiv.textContent = 'This field is required';
+                    input.classList.add('is-invalid');
+                    valid = false;
+                } else {
+                    errorDiv.textContent = '';
+                    input.classList.remove('is-invalid');
+                }
+            });
+
+            if (!valid) e.preventDefault();
+        });
+
+        fields.forEach(field => {
+            const input = form[field];
+            input.addEventListener('input', () => {
+                document.getElementById(field + 'Error').textContent = '';
+                input.classList.remove('is-invalid');
+            });
+
+            input.addEventListener('change', () => {
+                document.getElementById(field + 'Error').textContent = '';
+                input.classList.remove('is-invalid');
+            });
+        });
+    </script>
+</body>
+
+</html>
